@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.alen.mapper.BrokerMessageLogMapper">
+    <resultMap id="BaseResultMap" type="com.alen.entity.BrokerMessageLog">
+        <result column="message_id" jdbcType="VARCHAR" property="message_id"/>
+        <result column="message" jdbcType="VARCHAR" property="message"/>
+        <result column="try_count" jdbcType="INTEGER" property="try_count"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="next_retry" jdbcType="TIMESTAMP" property="next_retry"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="create_time"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="update_time"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.alen.entity.BrokerMessageLog">
+        <selectKey keyProperty="message_id" order="AFTER" resultType="java.lang.String">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into broker_message_log (message, try_count, status,
+        next_retry, create_time, update_time
+        )
+        values (#{message,jdbcType=VARCHAR}, #{try_count,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR},
+        #{next_retry,jdbcType=TIMESTAMP}, #{create_time,jdbcType=TIMESTAMP}, #{update_time,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.alen.entity.BrokerMessageLog">
+        <selectKey keyProperty="message_id" order="AFTER" resultType="java.lang.String">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into broker_message_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="message != null">
+                message,
+            </if>
+            <if test="try_count != null">
+                try_count,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="next_retry != null">
+                next_retry,
+            </if>
+            <if test="create_time != null">
+                create_time,
+            </if>
+            <if test="update_time != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="message != null">
+                #{message,jdbcType=VARCHAR},
+            </if>
+            <if test="try_count != null">
+                #{try_count,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="next_retry != null">
+                #{next_retry,jdbcType=TIMESTAMP},
+            </if>
+            <if test="create_time != null">
+                #{create_time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="update_time != null">
+                #{update_time,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="query4StatusAndTimeoutMessage" resultMap="BaseResultMap">
+        SELECT message_id,message,try_count,status,next_retry
+        FROM broker_message_log
+        WHERE status='0'
+        AND next_retry<=sysdate()
+    </select>
+
+    <update id="update4ReSend">
+        UPDATE broker_message_log bml
+        SET bml.try_count   = bml.try_count + 1,
+            bml.update_time = #{updateTime}
+        WHERE bml.message_id = #{messgeId}
+    </update>
+
+    <update id="changeStatus">
+        UPDATE broker_message_log bml
+        SET bml.status     = #{status},
+            bml.updateTime = #{updateTime}
+        WHERE bml.messageId = #{messageId}
+    </update>
+</mapper>
