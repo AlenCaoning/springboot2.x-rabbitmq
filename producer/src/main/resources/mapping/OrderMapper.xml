@@ -7,11 +7,8 @@
         <result column="message_id" jdbcType="VARCHAR" property="message_id"/>
     </resultMap>
     <insert id="insert" parameterType="com.alen.entity.Order">
-        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
-        insert into t_order (name, message_id)
-        values (#{name,jdbcType=VARCHAR}, #{message_id,jdbcType=VARCHAR})
+        insert into t_order (id,name, message_id)
+        values (#{id},#{name,jdbcType=VARCHAR}, #{message_id,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.alen.entity.Order">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">

@@ -39,10 +39,11 @@ public class OrderService
       BrokerMessageLog brokerMessageLog = new BrokerMessageLog();
       brokerMessageLog.setMessage_id(order.getMessage_id());
       brokerMessageLog.setMessage(JSON.toJSON(order).toString());
-      brokerMessageLog.setStatus("0");
+      brokerMessageLog.setStatus(Constants.ORDER_SENDING);
       brokerMessageLog.setNext_retry(DateUtils.addMinutes(orderDate, Constants.ORDER_TIMEOUT));
       brokerMessageLog.setCreate_time(orderDate);
       brokerMessageLog.setUpdate_time(orderDate);
+      brokerMessageLog.setTry_count(0);
       brokerMessageLogMapper.insert(brokerMessageLog);
 
       orderSender.send(order);

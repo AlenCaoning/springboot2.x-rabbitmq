@@ -8,9 +8,7 @@ package com.alen.config.database;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.stereotype.Component;
 
 import lombok.Data;
@@ -53,9 +51,4 @@ public class DruidDataSourceSettings
 
    @Value("${druid.connectionProperties}") private String connectionProperties;
 
-   @Bean
-   public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer()
-   {
-      return new PropertySourcesPlaceholderConfigurer();
-   }
 }

@@ -7,14 +7,12 @@
 package com.alen.config.database;
 
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.context.annotation.Configuration;
 
 
 
-@Configuration
+//@Configuration
 //在数据源加载完成后自动装配
-@AutoConfigureAfter(MybatisDataSourceConfig.class)
+//@AutoConfigureAfter(MybatisDataSourceConfig.class)
 public class MybatisMapperScannerConfig
 {
    public MapperScannerConfigurer mapperScannerConfigurer()

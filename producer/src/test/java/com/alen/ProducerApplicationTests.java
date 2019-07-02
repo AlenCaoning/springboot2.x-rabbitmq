@@ -2,6 +2,7 @@ package com.alen;
 
 import com.alen.entity.Order;
 import com.alen.producer.OrderSender;
+import com.alen.service.OrderService;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,11 +46,22 @@ public class ProducerApplicationTests {
 				System.currentTimeMillis() + "$" + UUID.randomUUID().toString());
 
 		CorrelationData correlationData = new CorrelationData();
-		correlationData.setId(order.getMessgeId());
+		correlationData.setId(order.getMessage_id());
 
 		rabbitTemplate.convertAndSend("order-exchange1",//exchange
 				"order.123",//routingKey
 				order,//消息体内容
 				correlationData);//消息唯一id);
+	}
+
+	@Autowired
+	private OrderService orderService;
+	@Test
+	public void testCreateOrder() throws Exception{
+		Order order = new Order();
+		order.setId(String.valueOf(System.currentTimeMillis()));
+		order.setName("测试订单0702");
+		order.setMessage_id(System.currentTimeMillis() + "$" + UUID.randomUUID().toString());
+		orderService.createOrder(order);
 	}
 }

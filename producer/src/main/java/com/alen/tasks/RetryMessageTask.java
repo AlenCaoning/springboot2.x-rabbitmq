@@ -33,7 +33,7 @@ public class RetryMessageTask
    {
       System.err.println("~~~~~定时任务开启~~~~~");
       List<BrokerMessageLog> list = brokerMessageLogMapper.query4StatusAndTimeoutMessage();
-
+      System.err.println(list);
       if (CollectionUtils.isNotEmpty(list))
       {
          list.forEach(brokerMessageLog ->

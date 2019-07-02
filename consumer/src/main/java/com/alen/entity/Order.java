@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Order implements Serializable//mq传递消息，需要序列化
 {
-   private static final long serialVersionUID = -3754514622481267331L;
+   private static final long serialVersionUID = 6826705142160901833L;
    private String id;
    private String name;
    //存储消息发送的唯一标识

@@ -72,4 +72,12 @@ public class BrokerMessageLog {
     public void setUpdate_time(Date update_time) {
         this.update_time = update_time;
     }
+
+    @Override
+    public String toString()
+    {
+        return "BrokerMessageLog{" + "message_id='" + message_id + '\'' + ", message='" + message + '\'' + ", try_count="
+              + try_count + ", status='" + status + '\'' + ", next_retry=" + next_retry + ", create_time=" + create_time
+              + ", update_time=" + update_time + '}';
+    }
 }

@@ -32,7 +32,7 @@
         </javaModelGenerator>
 
         <!-- mapper映射文件生成的位置 -->
-        <sqlMapGenerator targetPackage="com.alen.mapping"
+        <sqlMapGenerator targetPackage="mapping"
                          targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
